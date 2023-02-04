@@ -1,14 +1,39 @@
 using System;
 using System.IO;
+using System.Security.Cryptography;
 
 internal class Program
 {
     class Person
     {
-        public string? name, faculty, specialty, course, group, city, pst_index, street, phone, mail; 
+        public string? name, faculty, specialty, course, group, city, pst_index, street, phone, mail;
+        public void set_inf()
+        {
+            Console.WriteLine("Enter the INITIALS:");
+            name = Console.ReadLine();
+            Console.WriteLine("Enter the Faculty:");
+            faculty = Console.ReadLine();
+            Console.WriteLine("Enter the Specialty:");
+            specialty = Console.ReadLine();
+            Console.WriteLine("Enter the Course:");
+            course = Console.ReadLine();
+            Console.WriteLine("Enter the Group:");
+            group = Console.ReadLine();
+            Console.WriteLine("Enter the City:");
+            city = Console.ReadLine();
+            Console.Write("Enter the Post Index:");
+            pst_index = Console.ReadLine();
+            Console.Write("Enter the Street:");
+            street = Console.ReadLine();
+            Console.Write("Enter the Phone:");
+            phone = Console.ReadLine();
+            Console.Write("Enter the E-mail:");
+            mail = Console.ReadLine();
+        }
+        
     };
     
-    static async void ListMenu(FileInfo fileInf)
+    static void ListMenu(FileInfo fileInf)
     {
     
         if (fileInf.Exists)
@@ -24,45 +49,45 @@ internal class Program
         Person human = new Person();
         if (fileInf.Exists)
         {
-            Console.Clear();
-            Console.WriteLine("Enter the INITIALS:");
-            human.name = Convert.ToString(Console.Read());
-            Console.WriteLine("Enter the Faculty:");
-            human.faculty = Convert.ToString(Console.Read());
-            Console.WriteLine("Enter the Specialty:");
-            human.specialty = Convert.ToString(Console.Read());
-            Console.WriteLine("Enter the Course:");
-            human.course = Convert.ToString(Console.Read());
-            Console.WriteLine("Enter the Group:");
-            human.group = Console.ReadLine();
-            Console.WriteLine("Enter the City:");
-            human.city = Console.ReadLine();
-            Console.Write("Enter the Post Index:");
-            human.pst_index = Console.ReadLine();
-            Console.Write("Enter the Street:");
-            human.street = Console.ReadLine();
-            Console.Write("Enter the Phone:");
-            human.phone = Console.ReadLine();
-            Console.Write("Enter the E-mail:");
-            human.mail = Console.ReadLine();
-            string originalText = $"FIO = {human.name}, Faculty = {human.faculty}, Specialty = {human.specialty}, Course = {human.course}, Group = {human.group}, City = {human.city}, PostIndex = {human.pst_index}, Street = {human.street}, Phone = {human.phone}, Mail = {human.mail}";
-
-            File.WriteAllText(path, originalText);
+            human.set_inf();
+            string originalText = $"FIO = {human.name}, Faculty = {human.faculty}, Specialty = {human.specialty}, Course = {human.course}, Group = {human.group}, City = {human.city}, PostIndex = {human.pst_index}, Street = {human.street}, Phone = {human.phone}, Mail = {human.mail}\n";
+            File.AppendAllText(path, originalText);
+            
         }
         else
             Console.WriteLine("Cannot find the file!");
        
     }
 
-    static void FindNode()
+    static void Filter()
     {
+        Console.WriteLine("Enter what type do u want to filt:\n1)faculty\n2)speciality\n3)course\n4)group\n");
+        string? c = Console.ReadLine();
+        switch (c)
+        {
+            case "1":
+                Console.Clear();
+                break;
+            case "2":
+                Console.Clear();
+                break;
+            case "3":
+                Console.Clear();
+                break;
+            case "4":
+                Console.Clear();
+                break;
+        }
+/*        if( ... == key_word)                                                    //ключевое слово надо сравнить с потоком слов, если он равен, то выводится список, содержащий данные записи
+        {
 
+        }*/
     }
 
     static void PrintMenu(FileInfo fileInf, string path)
     {
         Men:
-        Console.Write("Enter the number:\n1.Get the list\n2.Add node\n3.Find node\n4.Exit\n");
+        Console.Write("Enter the number:\n1.Get the list\n2.Add node\n3.Filter\n4.Exit\n");
         char ch = Convert.ToChar(Console.Read());
         switch (ch)
         {
@@ -81,7 +106,7 @@ internal class Program
             case '3':
                 {
                     Console.Clear();
-                    FindNode();
+                    Filter();
                     break;
                 }
             case '4':
@@ -96,7 +121,6 @@ internal class Program
                     Thread.Sleep(500);
                     Console.Clear();
                     goto Men;
-                    break;
                 }
         }
     }
@@ -107,9 +131,7 @@ internal class Program
        
         PrintMenu(fileInf, path);
 
-
-
-       
+        System.Environment.Exit(0);
     }
 }
 
