@@ -1,0 +1,115 @@
+using System;
+using System.IO;
+
+internal class Program
+{
+    class Person
+    {
+        public string? name, faculty, specialty, course, group, city, pst_index, street, phone, mail; 
+    };
+    
+    static async void ListMenu(FileInfo fileInf)
+    {
+    
+        if (fileInf.Exists)
+        {
+           // for(int i = 0; i < )                                                //make this!!! cannot find file.eof!!!
+        }
+        else
+            Console.WriteLine("Cannot find the file!");
+    }
+
+    static void AddNode(FileInfo fileInf, string path)
+    {
+        Person human = new Person();
+        if (fileInf.Exists)
+        {
+            Console.Clear();
+            Console.WriteLine("Enter the INITIALS:");
+            human.name = Convert.ToString(Console.Read());
+            Console.WriteLine("Enter the Faculty:");
+            human.faculty = Convert.ToString(Console.Read());
+            Console.WriteLine("Enter the Specialty:");
+            human.specialty = Convert.ToString(Console.Read());
+            Console.WriteLine("Enter the Course:");
+            human.course = Convert.ToString(Console.Read());
+            Console.WriteLine("Enter the Group:");
+            human.group = Console.ReadLine();
+            Console.WriteLine("Enter the City:");
+            human.city = Console.ReadLine();
+            Console.Write("Enter the Post Index:");
+            human.pst_index = Console.ReadLine();
+            Console.Write("Enter the Street:");
+            human.street = Console.ReadLine();
+            Console.Write("Enter the Phone:");
+            human.phone = Console.ReadLine();
+            Console.Write("Enter the E-mail:");
+            human.mail = Console.ReadLine();
+            string originalText = $"FIO = {human.name}, Faculty = {human.faculty}, Specialty = {human.specialty}, Course = {human.course}, Group = {human.group}, City = {human.city}, PostIndex = {human.pst_index}, Street = {human.street}, Phone = {human.phone}, Mail = {human.mail}";
+
+            File.WriteAllText(path, originalText);
+        }
+        else
+            Console.WriteLine("Cannot find the file!");
+       
+    }
+
+    static void FindNode()
+    {
+
+    }
+
+    static void PrintMenu(FileInfo fileInf, string path)
+    {
+        Men:
+        Console.Write("Enter the number:\n1.Get the list\n2.Add node\n3.Find node\n4.Exit\n");
+        char ch = Convert.ToChar(Console.Read());
+        switch (ch)
+        {
+            case '1':
+                {
+                    Console.Clear();
+                    ListMenu(fileInf);
+                    break;
+                }
+            case '2':
+                {
+                    Console.Clear();
+                    AddNode(fileInf, path);
+                    break;
+                }
+            case '3':
+                {
+                    Console.Clear();
+                    FindNode();
+                    break;
+                }
+            case '4':
+                {
+                    Console.Clear();
+                    break;
+                }
+            default:
+                {
+                    Console.Clear();
+                    Console.WriteLine("Error! Cannot get the the symbol");
+                    Thread.Sleep(500);
+                    Console.Clear();
+                    goto Men;
+                    break;
+                }
+        }
+    }
+    private static void Main(string[] args)
+    {
+        string path = @"/Users/eviolspirid/vscode/content.txt";
+        FileInfo fileInf = new FileInfo(path);
+       
+        PrintMenu(fileInf, path);
+
+
+
+       
+    }
+}
+
