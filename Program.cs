@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.IO;
+using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
 
 //string path = @"/Users/eviolspirid/Projects/c_sharp/str_stud/str_stud/content.txt";
@@ -8,7 +9,7 @@ internal class Program
 {
     class Person
     {
-        private string? name, faculty, specialty, course, group, city, pst_index, street, phone, mail;
+        private string? name, faculty, specialty, course, group, city, pstIndex, street, phone, mail;
         public void set_inf()
         {
             Console.WriteLine("Enter the INITIALS:");
@@ -24,7 +25,7 @@ internal class Program
             Console.WriteLine("Enter the City:");
             city = Console.ReadLine();
             Console.Write("Enter the Post Index:");
-            pst_index = Console.ReadLine();
+            pstIndex = Console.ReadLine();
             Console.Write("Enter the Street:");
             street = Console.ReadLine();
             Console.Write("Enter the Phone:");
@@ -32,12 +33,29 @@ internal class Program
             Console.Write("Enter the E-mail:");
             mail = Console.ReadLine();
         }
-        public string get_inf()
+        public string GetInf()
         {
-            return $"FIO = {name}, Faculty = {faculty}, Specialty = {specialty}, Course = {course}, Group = {group}, City = {city}, PostIndex = {pst_index}, Street = {street}, Phone = {phone}, Mail = {mail}\n";
+            return $"FIO = {name}, Faculty = {faculty}, Specialty = {specialty}, Course = {course}, Group = {group}, City = {city}, PostIndex = {pstIndex}, Street = {street}, Phone = {phone}, Mail = {mail}\n";
         }
+        public Person() { }
         
     };
+
+    void prop_inf(string text)
+    {
+        Person tem_h = new Person();
+        int fio = text.IndexOf("FIO");
+                                                   //прописать функцию friendly и присвоить конкретное слово соотв временному объекту
+        int facult = text.IndexOf("Faculty");
+        int spec = text.IndexOf("Specialty");
+        int course = text.IndexOf("Course");
+        int group = text.IndexOf("Group");
+        int city = text.IndexOf("City");
+        int post = text.IndexOf("PostIndex");
+        int strt = text.IndexOf("Street");
+        int phn = text.IndexOf("Phone");
+        int mail = text.IndexOf("Mail");
+    }
 
     static void ListMenu(FileInfo fileInf, string path)
     {
@@ -46,9 +64,30 @@ internal class Program
         {
             using (StreamReader reader = new StreamReader(path))
             {
-                string text = reader.ReadToEnd();
+                string text = reader.ReadLine();
                 Console.WriteLine(text);
-            }                                           
+                Person tem_h = new Person();
+                string tag = text.Substring(text.IndexOf("FIO "), text.IndexOf(","));
+                string facult = text.Substring(text.IndexOf("Faculty "), text.IndexOf(","));
+                string spec = text.Substring(text.IndexOf("Specialty"),text.IndexOf(","));
+                string course = text.Substring(text.IndexOf("Course"), text.IndexOf(','));
+                string group = text.Substring(text.IndexOf("Group"), text.IndexOf(','));
+                string city = text.Substring(text.IndexOf("City"), text.IndexOf(','));
+                string post = text.Substring(text.IndexOf("PostIndex"), text.IndexOf(','));
+                string strt = text.Substring(text.IndexOf("Street"), text.IndexOf(','));
+                string phn = text.Substring(text.IndexOf("Phone"), text.IndexOf(','));
+                string mail = text.Substring(text.IndexOf("Mail"));
+                tag.Remove(0, tag.IndexOf("=")+1);
+                Console.WriteLine(tag);
+                Console.WriteLine(facult);
+                Console.WriteLine(spec);
+                Console.WriteLine(course);
+                Console.WriteLine(city);
+                Console.WriteLine(post);
+                Console.WriteLine(strt);
+                Console.WriteLine(phn);
+                Console.WriteLine(mail);
+            } 
         }
         else
             Console.WriteLine("Cannot find the file!");
@@ -60,7 +99,7 @@ internal class Program
         if (fileInf.Exists)
         {
             human.set_inf();
-            string originalText = human.get_inf();
+            string originalText = human.GetInf();
             File.AppendAllText(path, originalText);
             
         }
