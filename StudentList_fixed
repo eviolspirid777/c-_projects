@@ -1,12 +1,15 @@
 using System;
 using System.IO;
+using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
+
+//string path = @"/Users/eviolspirid/Projects/c_sharp/str_stud/str_stud/content.txt";
 
 internal class Program
 {
     class Person
     {
-        public string? name, faculty, specialty, course, group, city, pst_index, street, phone, mail;
+        private string? name, faculty, specialty, course, group, city, pst_index, street, phone, mail;
         public void set_inf()
         {
             Console.WriteLine("Enter the INITIALS:");
@@ -30,15 +33,49 @@ internal class Program
             Console.Write("Enter the E-mail:");
             mail = Console.ReadLine();
         }
+        public string get_inf()
+        {
+            return $"FIO = {name}, Faculty = {faculty}, Specialty = {specialty}, Course = {course}, Group = {group}, City = {city}, PostIndex = {pst_index}, Street = {street}, Phone = {phone}, Mail = {mail}\n";
+        }
         
     };
-    
-    static void ListMenu(FileInfo fileInf)
+
+    void prop_inf(string text)
     {
-    
+        Person tem_h = new Person();
+        int fio = text.IndexOf("FIO");
+        tem_h                                           //прописать функцию friendly и присвоить конкретное слово соотв временному объекту
+        int facult = text.IndexOf("Faculty");
+        int spec = text.IndexOf("Specialty");
+        int course = text.IndexOf("Course");
+        int group = text.IndexOf("Group");
+        int city = text.IndexOf("City");
+        int post = text.IndexOf("PostIndex");
+        int strt = text.IndexOf("Street");
+        int phn = text.IndexOf("Phone");
+        int mail = text.IndexOf("Mail");
+    }
+
+    static void ListMenu(FileInfo fileInf, string path)
+    {
+        
         if (fileInf.Exists)
         {
-           // for(int i = 0; i < )                                                //make this!!! cannot find file.eof!!!
+            using (StreamReader reader = new StreamReader(path))
+            {
+                string text = reader.ReadToEnd();
+                Console.WriteLine(text);
+                int fio = text.IndexOf("FIO");
+                int facult = text.IndexOf("Faculty");
+                int spec = text.IndexOf("Specialty");
+                int course = text.IndexOf("Course");
+                int group = text.IndexOf("Group");
+                int city = text.IndexOf("City");
+                int post = text.IndexOf("PostIndex");
+                int strt = text.IndexOf("Street");
+                int phn = text.IndexOf("Phone");
+                int mail = text.IndexOf("Mail");
+            } 
         }
         else
             Console.WriteLine("Cannot find the file!");
@@ -50,7 +87,7 @@ internal class Program
         if (fileInf.Exists)
         {
             human.set_inf();
-            string originalText = $"FIO = {human.name}, Faculty = {human.faculty}, Specialty = {human.specialty}, Course = {human.course}, Group = {human.group}, City = {human.city}, PostIndex = {human.pst_index}, Street = {human.street}, Phone = {human.phone}, Mail = {human.mail}\n";
+            string originalText = human.get_inf();
             File.AppendAllText(path, originalText);
             
         }
@@ -66,15 +103,23 @@ internal class Program
         switch (c)
         {
             case "1":
+                Console.WriteLine("Enter the faculty:");
+                string k_word = Console.ReadLine();
                 Console.Clear();
                 break;
             case "2":
+                Console.WriteLine("Enter the specialty:");
+           //     string k_word = Console.ReadLine();
                 Console.Clear();
                 break;
             case "3":
+                Console.WriteLine("Enter the course:");
+             //   string k_word = Console.ReadLine();
                 Console.Clear();
                 break;
             case "4":
+                Console.WriteLine("Enter the group:");
+             //   string k_word = Console.ReadLine();
                 Console.Clear();
                 break;
         }
@@ -88,13 +133,13 @@ internal class Program
     {
         Men:
         Console.Write("Enter the number:\n1.Get the list\n2.Add node\n3.Filter\n4.Exit\n");
-        char ch = Convert.ToChar(Console.Read());
+        char ch = Convert.ToChar(Console.ReadLine());
         switch (ch)
         {
             case '1':
                 {
                     Console.Clear();
-                    ListMenu(fileInf);
+                    ListMenu(fileInf, path);
                     break;
                 }
             case '2':
@@ -126,7 +171,7 @@ internal class Program
     }
     private static void Main(string[] args)
     {
-        string path = @"/Users/eviolspirid/vscode/content.txt";
+        string path = @"/Users/eviolspirid/Projects/c_sharp/str_stud/str_stud/content.txt";
         FileInfo fileInf = new FileInfo(path);
        
         PrintMenu(fileInf, path);
