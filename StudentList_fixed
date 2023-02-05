@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 //string path = @"/Users/eviolspirid/Projects/c_sharp/str_stud/str_stud/content.txt";
 
@@ -9,11 +11,23 @@ internal class Program
 {
     class Person
     {
-        private string? name, faculty, specialty, course, group, city, pstIndex, street, phone, mail;
-        public void set_inf()
+     static int counter;
+     public string? FIO { get; set; }
+     public string? faculty { get; set; }
+     public string? specialty { get; set; }
+     public string? course { get; set; }
+     public string? group { get; set; }
+     public string? city { get; set; }
+     public string? pstIndex { get; set; }
+     public string? street { get; set; }
+     public string? phone { get; set; }
+     public string? mail { get; set; }
+
+
+        public void SetInf()
         {
             Console.WriteLine("Enter the INITIALS:");
-            name = Console.ReadLine();
+            FIO = Console.ReadLine();
             Console.WriteLine("Enter the Faculty:");
             faculty = Console.ReadLine();
             Console.WriteLine("Enter the Specialty:");
@@ -32,13 +46,13 @@ internal class Program
             phone = Console.ReadLine();
             Console.Write("Enter the E-mail:");
             mail = Console.ReadLine();
+          
         }
-        public string GetInf()
+        public void GetInf()
         {
-            return $"FIO = {name}, Faculty = {faculty}, Specialty = {specialty}, Course = {course}, Group = {group}, City = {city}, PostIndex = {pstIndex}, Street = {street}, Phone = {phone}, Mail = {mail}\n";
+            Console.WriteLine($" FIO = {FIO}\n Faculty = {faculty}\n Specialty = {specialty}\n Course = {course}\n Group = {group}\n City = {city}\n PostIndex = {pstIndex}\n Street = {street}\n Phone = {phone}\n Mail = {mail}\n\n");
         }
-        public Person() { }
-        
+            
     };
 
     void prop_inf(string text)
@@ -64,8 +78,27 @@ internal class Program
         {
             using (StreamReader reader = new StreamReader(path))
             {
+                string? line;
+                while ((line = reader.ReadLine())!= null)
+                {
+                    //Console.WriteLine(line);
+                    string jsonString = File.ReadAllText(path);
+                    Person exmpl = JsonSerializer.Deserialize<Person>(jsonString)!; //ПРЕДСТАВИТЬ ВВИДЕ МАССИВА И ОТРАБОТАТЬ КАЖДЫЙ ЭЛЕМЕНТ ЧЕРЕЗ ЦИКЛ
+                    exmpl.GetInf();
+                    Console.WriteLine("\nPress any key to continue...");
+                    Console.ReadKey();
+                    Console.Clear();
+                    PrintMenu(fileInf,path);
+
+                }
+            }
+            /*
                 string text = reader.ReadLine();
                 Console.WriteLine(text);
+                string jsonString = File.ReadAllText(path);
+                Person exmpl = JsonSerializer.Deserialize<Person>(jsonString)!;
+            */
+                /*
                 Person tem_h = new Person();
                 string tag = text.Substring(text.IndexOf("FIO "), text.IndexOf(","));
                 string facult = text.Substring(text.IndexOf("Faculty "), text.IndexOf(","));
@@ -87,7 +120,8 @@ internal class Program
                 Console.WriteLine(strt);
                 Console.WriteLine(phn);
                 Console.WriteLine(mail);
-            } 
+                */
+         
         }
         else
             Console.WriteLine("Cannot find the file!");
@@ -98,9 +132,12 @@ internal class Program
         Person human = new Person();
         if (fileInf.Exists)
         {
-            human.set_inf();
-            string originalText = human.GetInf();
-            File.AppendAllText(path, originalText);
+            human.SetInf();
+            //string originalText = human.GetInf();
+            string jsonString = JsonSerializer.Serialize(human);
+            File.AppendAllText(path, jsonString);
+            Console.Clear();
+            PrintMenu(fileInf, path);
             
         }
         else
@@ -183,7 +220,7 @@ internal class Program
     }
     private static void Main(string[] args)
     {
-        string path = @"/Users/eviolspirid/Projects/c_sharp/str_stud/str_stud/content.txt";
+        string path = @"/Users/eviolspirid/Projects/c_sharp/str_stud/str_stud/content.json";
         FileInfo fileInf = new FileInfo(path);
        
         PrintMenu(fileInf, path);
