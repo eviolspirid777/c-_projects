@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection.PortableExecutable;
 using System.Security.Cryptography;
@@ -9,57 +9,12 @@ using System.Text.Json.Serialization;
 
 internal class Program
 {
-    class Person
-    {
-     static int counter;
-     public string? FIO { get; set; }
-     public string? faculty { get; set; }
-     public string? specialty { get; set; }
-     public string? course { get; set; }
-     public string? group { get; set; }
-     public string? city { get; set; }
-     public string? pstIndex { get; set; }
-     public string? street { get; set; }
-     public string? phone { get; set; }
-     public string? mail { get; set; }
-
-
-        public void SetInf()
-        {
-            Console.WriteLine("Enter the INITIALS:");
-            FIO = Console.ReadLine();
-            Console.WriteLine("Enter the Faculty:");
-            faculty = Console.ReadLine();
-            Console.WriteLine("Enter the Specialty:");
-            specialty = Console.ReadLine();
-            Console.WriteLine("Enter the Course:");
-            course = Console.ReadLine();
-            Console.WriteLine("Enter the Group:");
-            group = Console.ReadLine();
-            Console.WriteLine("Enter the City:");
-            city = Console.ReadLine();
-            Console.Write("Enter the Post Index:");
-            pstIndex = Console.ReadLine();
-            Console.Write("Enter the Street:");
-            street = Console.ReadLine();
-            Console.Write("Enter the Phone:");
-            phone = Console.ReadLine();
-            Console.Write("Enter the E-mail:");
-            mail = Console.ReadLine();
-          
-        }
-        public void GetInf()
-        {
-            Console.WriteLine($" FIO = {FIO}\n Faculty = {faculty}\n Specialty = {specialty}\n Course = {course}\n Group = {group}\n City = {city}\n PostIndex = {pstIndex}\n Street = {street}\n Phone = {phone}\n Mail = {mail}\n\n");
-        }
-            
-    };
-
+    
     void prop_inf(string text)
     {
         Person tem_h = new Person();
         int fio = text.IndexOf("FIO");
-                                                   //прописать функцию friendly и присвоить конкретное слово соотв временному объекту
+                                              //прописать функцию friendly и присвоить конкретное слово соотв временному объекту
         int facult = text.IndexOf("Faculty");
         int spec = text.IndexOf("Specialty");
         int course = text.IndexOf("Course");
@@ -91,37 +46,7 @@ internal class Program
                     PrintMenu(fileInf,path);
 
                 }
-            }
-            /*
-                string text = reader.ReadLine();
-                Console.WriteLine(text);
-                string jsonString = File.ReadAllText(path);
-                Person exmpl = JsonSerializer.Deserialize<Person>(jsonString)!;
-            */
-                /*
-                Person tem_h = new Person();
-                string tag = text.Substring(text.IndexOf("FIO "), text.IndexOf(","));
-                string facult = text.Substring(text.IndexOf("Faculty "), text.IndexOf(","));
-                string spec = text.Substring(text.IndexOf("Specialty"),text.IndexOf(","));
-                string course = text.Substring(text.IndexOf("Course"), text.IndexOf(','));
-                string group = text.Substring(text.IndexOf("Group"), text.IndexOf(','));
-                string city = text.Substring(text.IndexOf("City"), text.IndexOf(','));
-                string post = text.Substring(text.IndexOf("PostIndex"), text.IndexOf(','));
-                string strt = text.Substring(text.IndexOf("Street"), text.IndexOf(','));
-                string phn = text.Substring(text.IndexOf("Phone"), text.IndexOf(','));
-                string mail = text.Substring(text.IndexOf("Mail"));
-                tag.Remove(0, tag.IndexOf("=")+1);
-                Console.WriteLine(tag);
-                Console.WriteLine(facult);
-                Console.WriteLine(spec);
-                Console.WriteLine(course);
-                Console.WriteLine(city);
-                Console.WriteLine(post);
-                Console.WriteLine(strt);
-                Console.WriteLine(phn);
-                Console.WriteLine(mail);
-                */
-         
+            }  
         }
         else
             Console.WriteLine("Cannot find the file!");
@@ -132,6 +57,9 @@ internal class Program
         Person human = new Person();
         if (fileInf.Exists)
         {
+          /*  Console.WriteLine("How many nodes you want to add?");
+            int b = Convert.ToInt32(Console.ReadLine());
+          */
             human.SetInf();
             //string originalText = human.GetInf();
             string jsonString = JsonSerializer.Serialize(human);
@@ -205,6 +133,9 @@ internal class Program
                 }
             case '4':
                 {
+                    Console.Clear();
+                    Console.WriteLine("Goodbye!");
+                    Thread.Sleep(1200);
                     Console.Clear();
                     break;
                 }
