@@ -1,1 +1,0 @@
-FIO = Misurin Kirill, Faculty = IMIT, Specialty = MKN, Course = 3, Group = MKN-b-0-20-1, City = Stavropol, PostIndex = 355042, Street = Dovatorsev, Phone = 89881108807, Mail = eviolspirid@gmail.com
